@@ -5,6 +5,7 @@ open System.Collections.Generic
 open System.Linq
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Mvc
+open fsharp_jumpstart_workshop
 open fsharp_jumpstart_workshop.Types
 open fsharp_jumpstart_workshop.Workflows
 open fsharp_jumpstart_workshop.Repositories
@@ -16,7 +17,7 @@ type MembersController () =
 
     [<HttpGet>]
     member this.Get() =
-        let members : Member[] =[||]
+        let members : Member[] = Dependencies.getAllMembersWorkflow () |> Array.ofList
         ActionResult<Member[]>(members) 
 
     [<HttpGet("{id}")>]

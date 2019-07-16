@@ -1,7 +1,7 @@
 namespace fsharp_jumpstart_workshop.Repositories
 
 open System
-open System.Collections
+open System.Collections.Generic
 open fsharp_jumpstart_workshop.Types
 open System.Data.SQLite
 //open Microsoft.Data.Sqlite
@@ -67,6 +67,16 @@ module MemberRepository =
     let getAll () =
 
         let selectSql = "select id, first_name, last_name, email, plan_id from members;"
-        let results = Database.readData<MemberDto> connectionString selectSql ([Database.p "" ""] |> dict)
+        let partial =  Database.readData connectionString
+        let results = partial selectSql ([Database.p "" ""] |> dict)
 
         results |> List.ofSeq
+
+    let injectedGetAll (readData: string -> obj -> IEnumerable<MemberDto>) : Member list =
+
+        let selectSql = "select id, first_name as firstName, last_name as lastName, email, plan_id as planId from members;"
+        let results = readData selectSql ([Database.p "" ""] |> dict)
+
+        results 
+        |> List.ofSeq
+        |> List.map toDomain

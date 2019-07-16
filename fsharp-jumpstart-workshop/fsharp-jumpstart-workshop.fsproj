@@ -11,6 +11,7 @@
     <Compile Include="Repositories/Database.fs" />
     <Compile Include="Repositories/MemberRepository.fs" />
     <Compile Include="Workflows/MemberWorkflows.fs" />
+    <Compile Include="Dependencies.fs" />
     <Compile Include="Controllers/ValuesController.fs" />
     <Compile Include="Controllers/MembersController.fs" />
     <Compile Include="Startup.fs" />
