@@ -1,6 +1,10 @@
 ﻿<Properties StartupConfiguration="{EE4C2403-9C7B-4935-BAAB-44C8A602CA09}|Default">
   <MonoDevelop.Ide.ItemProperties.fsharp-jumpstart-workshop PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="fsharp-jumpstart-workshop/Repositories/MemberRepository.fs">
+    <Files>
+      <File FileName="fsharp-jumpstart-workshop/Repositories/MemberRepository.fs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
