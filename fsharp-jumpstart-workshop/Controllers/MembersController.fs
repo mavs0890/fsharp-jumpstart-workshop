@@ -16,7 +16,6 @@ type MembersController () =
 
     [<HttpGet>]
     member this.Get() =
-        let readData = PostgresConnection.readData<MemberRepository.MemberDto> "connectionString" //todo: we need to figure out what to do with this type param
         let members : Member[] =[||]
         ActionResult<Member[]>(members) 
 

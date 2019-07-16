@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Compile Include="Types/Member.fs" />
-    <Compile Include="Repositories/PostgresConnection.fs" />
+    <Compile Include="Repositories/Database.fs" />
     <Compile Include="Repositories/MemberRepository.fs" />
     <Compile Include="Workflows/MemberWorkflows.fs" />
     <Compile Include="Controllers/ValuesController.fs" />
