@@ -22,7 +22,7 @@ type MembersController () =
 
     [<HttpGet("{id}")>]
     member this.Get(id:int) =
-        let memberToReturn = { FirstName = "Marlon"; LastName = "Vilorio"; Email="marlon@test.com"; PlanId="testplanid" }
+        let memberToReturn = { Id = 22; FirstName = "Marlon"; LastName = "Vilorio"; Email="marlon@test.com"; PlanId="testplanid" }
         ActionResult<Member>(memberToReturn)
 
     [<HttpPost>]

@@ -12,6 +12,7 @@ module MemberRepository =
 
     [<CLIMutable>]
     type MemberDto = {
+        Id : int
         FirstName : string
         LastName : string
         Email : string
@@ -20,6 +21,7 @@ module MemberRepository =
 
     let toDomain (dto : MemberDto) : Member =
         {
+            Id = dto.Id
             FirstName = dto.FirstName
             LastName = dto.LastName
             Email = dto.Email
@@ -36,43 +38,40 @@ module MemberRepository =
         writeData
             query
             ([
-                Database.p "id" (Guid.NewGuid |> string)
+                Database.p "id" (memberToSave.Id)
                 Database.p "firstName" memberToSave.FirstName 
                 Database.p "lastName" memberToSave.LastName
                 Database.p "email" memberToSave.Email
                 Database.p "planId" memberToSave.PlanId
             ] |> dict)
 
+    let delete writeData (id : int) : unit =
+        let query = """
+            delete from members
+            where id = @id
+        """
+        writeData
+            query
+            ([
+                Database.p "id" id
+            ] |> dict)        
+
     
         
-    let findById readData id =
-        let query = """
-            select id, first_name as FirstName, last_name as LastName, email, plan_id as PlanId)
+    let findById (readData: string -> obj -> IEnumerable<MemberDto>) (id : int) : Member option =
+
+        let selectSql ="""
+            select id, first_name as FirstName, last_name as LastName, email, plan_id as PlanId
             from members
             where id = @id;
-        """
-        readData
-            query
-            ([ 
-                Database.p "id" id
-            ] |> dict)
-        |> Seq.tryHead
-        |> Option.map toDomain
+            """
+        readData selectSql ([Database.p "id" id] |> dict) 
+        |> List.ofSeq 
+        |> List.map toDomain 
+        |> List.tryHead
 
 
-    
-    let [<Literal>] connectionString = @"Data Source=" + __SOURCE_DIRECTORY__ + @"/Scripts/fsharpjumpstart.db;Version=3"
-
-
-    let getAll () =
-
-        let selectSql = "select id, first_name, last_name, email, plan_id from members;"
-        let partial =  Database.readData connectionString
-        let results = partial selectSql ([Database.p "" ""] |> dict)
-
-        results |> List.ofSeq
-
-    let injectedGetAll (readData: string -> obj -> IEnumerable<MemberDto>) : Member list =
+    let getAll (readData: string -> obj -> IEnumerable<MemberDto>) : Member list =
 
         let selectSql = "select id, first_name as firstName, last_name as lastName, email, plan_id as planId from members;"
         let results = readData selectSql ([Database.p "" ""] |> dict)

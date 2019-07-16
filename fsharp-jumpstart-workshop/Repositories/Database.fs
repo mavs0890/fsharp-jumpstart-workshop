@@ -15,3 +15,8 @@ module Database =
         conn.Open()
         let result = conn.Query<'a>(statement, parameters)
         result
+
+    let writeData (connectionString : string) statement parameters =
+        use conn = new SQLiteConnection(connectionString)
+        conn.Open()
+        conn.Execute(statement, parameters) |> ignore
