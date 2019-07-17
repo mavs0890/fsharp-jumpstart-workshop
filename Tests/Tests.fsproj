@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="TestDependencies.fs" />
     <Compile Include="MemberRepositoryTests.fs" />
+    <Compile Include="ValidationTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
