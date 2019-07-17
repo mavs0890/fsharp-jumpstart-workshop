@@ -1,9 +1,6 @@
 namespace fsharp_jumpstart_workshop.Repositories
 
-open System
-open Npgsql
 open Dapper
-open System.Data.Sql
 open System.Data.SQLite
 
 module Database =

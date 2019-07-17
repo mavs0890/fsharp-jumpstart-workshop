@@ -12,5 +12,11 @@ module Dependencies =
     let writer: string -> obj -> unit = Database.writeData connectionString
 
     let getAllMembers _ = MemberRepository.getAll reader
+    let findMemberById = MemberRepository.findById reader
+    let saveMember = MemberRepository.save writer
 
     let getAllMembersWorkflow = MemberWorkflows.getAll getAllMembers
+    let findMemberByIdWorkflow = MemberWorkflows.findById findMemberById
+    let saveMemberWorkflow = MemberWorkflows.save saveMember
+
+   

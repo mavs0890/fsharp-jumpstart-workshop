@@ -1,12 +1,8 @@
 namespace fsharp_jumpstart_workshop.Repositories
 
-open System
 open System.Collections.Generic
 open fsharp_jumpstart_workshop.Types
-open System.Data.SQLite
-//open Microsoft.Data.Sqlite
 open FSharp.Data.Sql
-open Dapper
 
 module MemberRepository =
 
