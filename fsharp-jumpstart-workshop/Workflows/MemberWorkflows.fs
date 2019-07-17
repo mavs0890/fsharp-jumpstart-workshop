@@ -14,7 +14,13 @@ module MemberWorkflows =
         (findById : int -> Member option)
         (id : int)
         =
-            findById id    
+            findById id  
+
+    let findByEmail 
+        (findByEmail : string -> Member option)
+        (email : string)
+        =
+            findByEmail email
 
     let save
         (save : Member -> unit)
@@ -24,4 +30,4 @@ module MemberWorkflows =
         (planId : string)
         =
             let memberToSave = { Id = Random().Next(); FirstName = firstName; LastName = lastName; Email = email; PlanId = planId}
-            save memberToSave
+            save memberToSave    

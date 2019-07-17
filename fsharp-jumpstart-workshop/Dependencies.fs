@@ -13,10 +13,12 @@ module Dependencies =
 
     let getAllMembers _ = MemberRepository.getAll reader
     let findMemberById = MemberRepository.findById reader
+    let findMemberByEmail = MemberRepository.findByEmail reader
     let saveMember = MemberRepository.save writer
 
     let getAllMembersWorkflow = MemberWorkflows.getAll getAllMembers
     let findMemberByIdWorkflow = MemberWorkflows.findById findMemberById
+    let findMemberByEmailWorkflow = MemberWorkflows.findByEmail findMemberByEmail
     let saveMemberWorkflow = MemberWorkflows.save saveMember
 
    

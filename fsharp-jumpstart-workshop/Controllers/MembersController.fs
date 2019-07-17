@@ -39,6 +39,14 @@ type MembersController () =
         | Some m -> this.Ok(m) :> ActionResult
         | None -> this.NotFound() :> ActionResult
 
+    [<HttpGet("email/{email}")>]
+    member this.Get(email:string) : ActionResult =
+        let memberFound = Dependencies.findMemberByEmail email
+       
+        match memberFound with
+        | Some m -> this.Ok(m) :> ActionResult
+        | None -> this.NotFound() :> ActionResult    
+
     [<HttpPost>]
     member this.Post([<FromBody>] memberToSave:MemberModel) =
         Dependencies.saveMemberWorkflow 
