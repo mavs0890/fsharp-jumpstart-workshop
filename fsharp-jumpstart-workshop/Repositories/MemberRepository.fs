@@ -66,6 +66,18 @@ module MemberRepository =
         |> List.map toDomain 
         |> List.tryHead
 
+    let findByEmail (readData: string -> obj -> IEnumerable<MemberDto>) (email : string) : Member option =
+
+        let selectSql ="""
+            select id, first_name as FirstName, last_name as LastName, email, plan_id as PlanId
+            from members
+            where email = @email;
+            """
+        readData selectSql ([Database.p "email" email] |> dict) 
+        |> List.ofSeq 
+        |> List.map toDomain 
+        |> List.tryHead    
+
 
     let getAll (readData: string -> obj -> IEnumerable<MemberDto>) : Member list =
 

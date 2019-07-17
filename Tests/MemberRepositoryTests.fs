@@ -81,6 +81,40 @@ module MemberRepositoryTests =
         let noMembersLeft = MemberRepository.getAll TestDependencies.memberRepositoryReader
         test <@ noMembersLeft |> List.isEmpty @>   
 
+    [<Fact>]
+    let ``find by email returns none when there is no member with that email`` () =
+        //setup
+        let member1 = createTestMember ()
+        MemberRepository.save TestDependencies.writer member1
+
+        //execute
+        let foundMember = MemberRepository.findByEmail TestDependencies.memberRepositoryReader "random@email.com"
+
+        //verify
+        test <@ foundMember = None @> 
+
+        //cleanup
+        MemberRepository.delete TestDependencies.writer member1.Id
+        let noMembersLeft = MemberRepository.getAll TestDependencies.memberRepositoryReader
+        test <@ noMembersLeft |> List.isEmpty @>   
+
+    [<Fact>]
+    let ``find by email returns member with matching email`` () =
+        //setup
+        let member1 = createTestMember ()
+        MemberRepository.save TestDependencies.writer member1
+
+        //execute
+        let foundMember = MemberRepository.findByEmail TestDependencies.memberRepositoryReader member1.Email
+
+        //verify
+        test <@ foundMember = Some member1 @> 
+
+        //cleanup
+        MemberRepository.delete TestDependencies.writer member1.Id
+        let noMembersLeft = MemberRepository.getAll TestDependencies.memberRepositoryReader
+        test <@ noMembersLeft |> List.isEmpty @>  
+
 
 
 
