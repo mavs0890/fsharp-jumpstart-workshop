@@ -1,6 +1,6 @@
 sqlite3 fsharpjumpstart.db
 
-create table members (id integer not null primary key, first_name text not null, last_name text not null, email text, plan_id text);
+create table members (id integer not null primary key, first_name text not null, last_name text not null, email text unique, plan_id text);
 
 insert into members values 
 (1, 'John', 'Smith', 'john@email.com', 'plan_1'),

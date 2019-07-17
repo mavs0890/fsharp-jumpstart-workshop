@@ -24,6 +24,7 @@ module MemberRepository =
             PlanId = dto.PlanId
         }
 
+    //todo: exception when trying to insert duplicate email... handle graciously
     let save writeData (memberToSave : Member) : unit =
         let query = """
             insert into members
