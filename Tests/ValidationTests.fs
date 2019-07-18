@@ -8,14 +8,6 @@ open fsharp_jumpstart_workshop.Types
 
 module ValidationTests =
 
-    let private createTestMemberOnPlan (planId : string) : Member = {
-        Id = Random().Next()
-        FirstName = "FirstName_" + (Guid.NewGuid() |> string)
-        LastName = "LastName_" + (Guid.NewGuid() |> string)
-        Email = (Guid.NewGuid() |> string) + "@test.com"
-        PlanId = planId
-    }
-
     [<Fact>]
     let ``validateEmail will verify email is atleast 3 characters `` () = 
         //setup
