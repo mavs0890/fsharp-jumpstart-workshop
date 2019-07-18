@@ -49,12 +49,16 @@ type MembersController () =
 
     [<HttpPost>]
     member this.Post([<FromBody>] memberToSave:MemberModel) =
-        Dependencies.saveMemberWorkflow 
-            memberToSave.FirstName
-            memberToSave.LastName
-            memberToSave.Email
-            memberToSave.PlanId
-        this.Ok() :> ActionResult
+        let success = 
+            Dependencies.saveMemberWorkflow 
+                memberToSave.FirstName
+                memberToSave.LastName
+                memberToSave.Email
+                memberToSave.PlanId
+        if success then
+            this.Ok() :> ActionResult
+        else 
+            this.BadRequest() :> ActionResult
 
 
 

@@ -2,6 +2,7 @@ namespace fsharp_jumpstart_workshop.Workflows
 
 open System
 open fsharp_jumpstart_workshop.Types
+open fsharp_jumpstart_workshop.Logic
 
 module MemberWorkflows =
 
@@ -29,5 +30,11 @@ module MemberWorkflows =
         (email : string)
         (planId : string)
         =
-            let memberToSave = { Id = Random().Next(); FirstName = firstName; LastName = lastName; Email = email; PlanId = planId}
-            save memberToSave    
+            let isEmailOk = Validation.validateEmail email
+            if isEmailOk then
+                let memberToSave = { Id = Random().Next(); FirstName = firstName; LastName = lastName; Email = email; PlanId = planId}
+                save memberToSave   
+                true 
+            else
+                false
+

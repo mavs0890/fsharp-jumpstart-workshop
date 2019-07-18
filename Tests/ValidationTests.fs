@@ -3,7 +3,7 @@ namespace Tests
 open System
 open Xunit
 open Swensen.Unquote
-open fsharp_jumpstart_worskhop.Logic
+open fsharp_jumpstart_workshop.Logic
 open fsharp_jumpstart_workshop.Types
 
 module ValidationTests =

@@ -1,4 +1,4 @@
-namespace fsharp_jumpstart_worskhop.Logic
+namespace fsharp_jumpstart_workshop.Logic
 
 open System
 open fsharp_jumpstart_workshop.Types
