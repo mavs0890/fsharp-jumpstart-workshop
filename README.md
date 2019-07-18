@@ -112,3 +112,16 @@
 
 5. Implement `validateEmail` so that all tests will pass.
 
+
+## Module 3
+
+* Create a function in `Repositories/MemberRepository.fs` to update a member email: `updateEmail`
+    * Use TDD by first writing a test in `MemberRepositoryTests.fs` making it fail and then making it pass
+
+**Stretch**
+
+* Implement a whole vertical slice of to update email
+    * Implement a `POST` endpoint in `MemberController.fs`
+    * Implement an `updateEmail` workflow in `MemberWorkflows.fs`
+
+* Verify that it works by updating the email of a member.
