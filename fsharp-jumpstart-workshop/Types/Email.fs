@@ -1,7 +1,10 @@
 namespace fsharp_jumpstart_workshop.Types
 
-type UnvalidatedEmail = unit
+type UnvalidatedEmail = UnvalidatedEmail of string
 
-type ValidatedEmail = unit
+type ValidatedEmail = ValidatedEmail of string
 
-type EmailValidationError = unit
+type EmailValidationError = 
+| TooShort
+| BadAtCount
+| NoTextBeforeOrAfterAt

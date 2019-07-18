@@ -55,10 +55,15 @@ type MembersController () =
                 memberToSave.LastName
                 memberToSave.Email
                 memberToSave.PlanId
-        if success then
-            this.Ok() :> ActionResult
-        else 
-            this.BadRequest() :> ActionResult
+        match success with
+        | Ok _ -> this.Ok() :> ActionResult
+        | Error err -> 
+            let errorMessage =  
+                match err with
+                | EmailValidationError.TooShort -> "Email needs to be atleast 3 characters long"
+                | EmailValidationError.BadAtCount -> "Email needs to have atleast and only 1 @"
+                | EmailValidationError.NoTextBeforeOrAfterAt -> "Email needs to have text before and after @"
+            this.BadRequest(errorMessage) :> ActionResult
 
 
 

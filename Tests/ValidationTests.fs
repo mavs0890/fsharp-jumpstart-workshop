@@ -16,14 +16,14 @@ module ValidationTests =
         let validEmailLong = "abcdefghijklnopqrtuvwxyz@abcdefghijklnopqrtuvwxyz"
 
         //execute
-        let resultForInvalidEmail = Validation.validateEmail invalidEmail
-        let resultForValidEmail = Validation.validateEmail validEmail
-        let resultForValidEmailLong = Validation.validateEmail validEmailLong
+        let resultForInvalidEmail = UnvalidatedEmail invalidEmail |> Validation.validateEmail
+        let resultForValidEmail = UnvalidatedEmail validEmail |> Validation.validateEmail
+        let resultForValidEmailLong = UnvalidatedEmail validEmailLong |> Validation.validateEmail
 
         //verify
-        test <@ not resultForInvalidEmail @>
-        test <@ resultForValidEmail @>
-        test <@ resultForValidEmailLong @>
+        test <@ resultForInvalidEmail = Error EmailValidationError.TooShort @>
+        test <@ resultForValidEmail = Ok (ValidatedEmail validEmail) @>
+        test <@ resultForValidEmailLong = Ok (ValidatedEmail validEmailLong) @>
 
     [<Fact>]
     let ``validateEmail will verify email contains at symbol`` () = 
@@ -32,12 +32,12 @@ module ValidationTests =
         let validEmail = "abcdefg@abcdefg"
 
         //execute
-        let resultForInvalidEmail = Validation.validateEmail invalidEmail
-        let resultForValidEmail = Validation.validateEmail validEmail
+        let resultForInvalidEmail = UnvalidatedEmail invalidEmail |> Validation.validateEmail
+        let resultForValidEmail = UnvalidatedEmail validEmail |> Validation.validateEmail
 
         //verify
-        test <@ not resultForInvalidEmail @>
-        test <@ resultForValidEmail @> 
+        test <@ resultForInvalidEmail = Error EmailValidationError.BadAtCount @>
+        test <@ resultForValidEmail = Ok (ValidatedEmail validEmail) @> 
 
     [<Fact>]
     let ``validateEmail will verify email only contains at symbol once`` () =
@@ -46,12 +46,12 @@ module ValidationTests =
         let validEmail = "abc@abc"   
 
         //execute
-        let resultForInvalidEmail = Validation.validateEmail invalidEmail
-        let resultForValidEmail = Validation.validateEmail validEmail
+        let resultForInvalidEmail = UnvalidatedEmail invalidEmail |> Validation.validateEmail
+        let resultForValidEmail = UnvalidatedEmail validEmail |> Validation.validateEmail
 
         //verify
-        test <@ not resultForInvalidEmail @>
-        test <@ resultForValidEmail @>
+        test <@ resultForInvalidEmail = Error EmailValidationError.BadAtCount @>
+        test <@ resultForValidEmail = Ok (ValidatedEmail validEmail) @> 
 
     [<Fact>]
     let ``validateEmail will verify that there is text before and after the at symbol`` () =
@@ -61,12 +61,11 @@ module ValidationTests =
         let validEmail = "abc@abc"  
 
         //execute
-        let resultForInvalidEmail = Validation.validateEmail invalidEmail
-        let resultForValidEmail2 = Validation.validateEmail invalidEmail2
-        let resultForValidEmail = Validation.validateEmail validEmail
+        let resultForInvalidEmail = UnvalidatedEmail invalidEmail |> Validation.validateEmail
+        let resultForValidEmail2 = UnvalidatedEmail invalidEmail2 |> Validation.validateEmail
+        let resultForValidEmail = UnvalidatedEmail validEmail |> Validation.validateEmail
 
         //verify
-        test <@ not resultForInvalidEmail @>
-        test <@ not resultForValidEmail2 @>
-        test <@ resultForValidEmail @>
-
+        test <@ resultForInvalidEmail = Error EmailValidationError.NoTextBeforeOrAfterAt @>
+        test <@ resultForValidEmail2 = Error EmailValidationError.NoTextBeforeOrAfterAt @>
+        test <@ resultForValidEmail = Ok (ValidatedEmail validEmail)  @>

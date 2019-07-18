@@ -30,11 +30,11 @@ module MemberWorkflows =
         (email : string)
         (planId : string)
         =
-            let isEmailOk = Validation.validateEmail email
-            if isEmailOk then
-                let memberToSave = { Id = Random().Next(); FirstName = firstName; LastName = lastName; Email = email; PlanId = planId}
-                save memberToSave   
-                true 
-            else
-                false
+            match Validation.validateEmail (UnvalidatedEmail email) with
+            | Ok (ValidatedEmail validatedEmail) -> 
+                let memberToSave = { Id = Random().Next(); FirstName = firstName; LastName = lastName; Email = validatedEmail; PlanId = planId}
+                save memberToSave
+                Ok ()  
+            | Error err ->
+                Error err
 
