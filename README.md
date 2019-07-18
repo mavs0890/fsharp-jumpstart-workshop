@@ -1,5 +1,3 @@
-
-
 ## Set up
 
 **Prerequisites:**
@@ -89,3 +87,25 @@
         * remove name parameter and compose using all the other functions provided in the MemberName.fs file
 
 
+## MODULE 2
+
+* Run the following to move to the next branch:
+
+    `git checkout 'start-module-2'`
+
+**We want email errors to be more explicit on why an email is not valid. When we use these email in the future we want to make sure that only valid emails are scheduled to be sent.**
+
+1. Create an `UnvalidatedEmail` type and a `ValidatedEmail` type in `Logic/Email.fs`.
+
+2. Create an `EmailValidationError` in `Logic/Email.fs` type to represent the 3 types of errors that you can have: 
+    * Too Short
+    * Missing @
+    * no text on either side of @
+
+3. Refactor tests to verify that they return the correct result type
+    * Make sure that the `validateEmail` function only takes in an `UnvalidatedEmail` and returns a `Result<validatedEmail, EmailValidationError>` 
+    * Temporarily change implementation of `validateEmail` to `failwith "not-implemented"`
+
+4. Refactor `MemberWorkflows.save` and `MemberController.post` to work with the result type.
+
+5. Implement `validateEmail` so that all tests will pass.
