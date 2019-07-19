@@ -23,6 +23,13 @@ module MemberWorkflows =
         =
             findByEmail email
 
+    let updateEmail
+        (updateEmail : string ->  int -> unit)
+        (email : string)
+        (id : int)
+        = 
+            updateEmail email id
+
     let save
         (save : Member -> unit)
         (firstName : string)

@@ -116,6 +116,27 @@ module MemberRepositoryTests =
         test <@ noMembersLeft |> List.isEmpty @>  
 
 
+    [<Fact>]
+    let ``updateEmail updates members email`` () =
+        //setup
+        let member1 = createTestMember ()
+        MemberRepository.save TestDependencies.writer member1
+        let newEmail = "new-email@email.com"
+
+        //execute
+        MemberRepository.updateEmail TestDependencies.writer newEmail member1.Id 
+
+        //verify
+        let memberFound = MemberRepository.findByEmail TestDependencies.memberRepositoryReader newEmail
+        let expectedMember = { member1 with Email = newEmail }
+        test <@ memberFound = Some expectedMember @> 
+
+        //cleanup
+        MemberRepository.delete TestDependencies.writer member1.Id
+        let noMembersLeft = MemberRepository.getAll TestDependencies.memberRepositoryReader
+        test <@ noMembersLeft |> List.isEmpty @>  
+
+
 
 
 

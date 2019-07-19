@@ -21,6 +21,12 @@ type MemberModel = {
     PlanId : string
 }   
 
+[<CLIMutable>]
+type UpdateEmailModel = {
+    Id : int
+    EmailToUpdate : string
+}   
+
 [<Route("api/[controller]")>]
 [<ApiController>]
 type MembersController () =
@@ -45,7 +51,13 @@ type MembersController () =
        
         match memberFound with
         | Some m -> this.Ok(m) :> ActionResult
-        | None -> this.NotFound() :> ActionResult    
+        | None -> this.NotFound() :> ActionResult
+
+    [<HttpPost("email")>]
+    member this.Post(model:UpdateEmailModel) : ActionResult =
+        Dependencies.updateEmailWorkflow model.EmailToUpdate model.Id 
+       
+        this.Ok() :> ActionResult  
 
     [<HttpPost>]
     member this.Post([<FromBody>] memberToSave:MemberModel) =

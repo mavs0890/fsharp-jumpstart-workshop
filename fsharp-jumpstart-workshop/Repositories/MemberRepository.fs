@@ -42,6 +42,19 @@ module MemberRepository =
                 Database.p "planId" memberToSave.PlanId
             ] |> dict)
 
+    let updateEmail writeData (emailToUpdate : string) (id : int) : unit =
+        let query = """
+            update members
+            set email = @email
+            where id = @id
+        """
+        writeData
+            query
+            ([
+                Database.p "id" (id)
+                Database.p "email" emailToUpdate
+            ] |> dict)
+
     let delete writeData (id : int) : unit =
         let query = """
             delete from members
